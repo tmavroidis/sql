@@ -1,0 +1,4 @@
+select  Diobli, Diobnm, Diobat, Diobsz
+                 from qusrsys.qaezdisk
+                 where Diobat = 'SAVF' AND Diobow Not Like 'Q%'
+                 order by Diobsz DESC ;
