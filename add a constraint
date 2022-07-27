@@ -1,0 +1,4 @@
+   ALTER TABLE qs36f.empmastp
+   ADD CONSTRAINT qs36f.valid_province FOREIGN 
+   KEY (EMPRCD) REFERENCES qs36f.provcode 
+   ON DELETE NO ACTION;
