@@ -1,0 +1,9 @@
+Multiple fields:
+UPDATE file2 SET (d50mac, D50MIC) = (SELECT d50mac, D50MIC 
+                      FROM file1                           
+                     WHERE file2.d50sup=file1.d50sup)      
+
+Full record (row)
+UPDATE file2 SET row = (SELECT *                     
+                      FROM file1                     
+                     WHERE file2.d50sup=file1.d50sup)
