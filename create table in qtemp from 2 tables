@@ -1,0 +1,8 @@
+exec sql  CREATE TABLE QTEMP/INVTMPP AS
+          (select a.ixcode, b.idtlkey, b.ilvkey, b.icmpny, b.idate, b.icharge,
+                  b.iamt, b.igstyn, b.igst, b.igl
+           from qs36f.invextp a
+           Left join qs36f.invdtlp b on a.ixvkey = b.idtlkey
+           where b.idtlkey is not NULL
+           order by ixvkey )
+           with data;
