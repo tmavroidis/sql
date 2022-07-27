@@ -1,0 +1,49 @@
+**FREE
+// *** USING SQL instead of CHAIN ***
+// Tom Mavroidis, March 27,2019
+// Example of a sql program that uses select instead of chain to
+//  determine if the invoice number has already been used
+// What is different about this program vs chain is that it doesn't require
+//  a logical to be built but instead looks at the sqlcod to see if the record
+//  was found. If the where criterion is true then it returns a 0 otherwise
+//  a non-zero. Fetch first row only returns the first occurrence in case there
+//  are duplicate entries so an error is not thrown.
+//  ---------------------------------------------------------------------------
+//  Declare the prototype in the program as follows
+//    Dcl-pr invNumr Extpgm;
+//    *N Packed(5:0);
+//    *N Char(20);
+//    *N Char(1);
+//    END-PR;
+//
+//  then call the function looking for a reutrn code of blank for true
+//    invNumr($vhvend:$vhinv#:InvUsed);
+//  ---------------------------------------------------------------------------
+
+CTL-OPT DFTACTGRP(*NO) OPTIMIZE(*NONE);
+
+exec sql
+  set option
+    commit=*none;
+
+Dcl-pi invnumr;
+  vendorNumber   Packed(5:0);
+  InvoiceNumber  char(20);
+  RecordStatus   char(1);
+end-pi;
+
+dcl-s  Xvhvend Packed(5);
+dcl-s  Xvhinv# char(20);
+
+exec sql select vendor_number, vendors_invoice_number into :Xvhvend,:Xvhinv#
+       from qs36f.apvouchp
+       where vendor_number = :vendorNumber
+       and   vendors_invoice_number = :InvoiceNumber
+       fetch first row only;
+
+if sqlcod <> 0;
+  RecordStatus = *blanks;
+  else;
+  RecordStatus = 'U';
+endif;
+return;             
