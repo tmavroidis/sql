@@ -1,0 +1,2 @@
+select POPO#, concat(concat(Pop#mj, digits(pop#mn)) , digits(Pop##)) as item_id, char(date(timestamp_format(digits(podate),'MMDDYY')),iso) as converted_date, 
+poqcse as qty_ord from superlib.wkpo where pop#mj = 1 and pop#mn = 15 and pop## = 535 order by item_id
