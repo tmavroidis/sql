@@ -1,0 +1,8 @@
+                                                                                  
+ exec sql declare cc cursor for                                                   
+       select a.tcdesc, b.tsdate, b.tstype, b.tshours, b.pybnk, b.tsamt, b.tsbank,
+              b.tsmemo, b.tspod, tspoc , b.tscmpny, b.tsbatch, b.tscurr , b.tsid  
+       from empcodep a                                                            
+       Left join emptimep b on b.tstype = a.tcode                                 
+       where tscurr = 'Y' and tsempid =  :netpaydds.npemp#                        
+       order by a.tcdesc;                                                         
