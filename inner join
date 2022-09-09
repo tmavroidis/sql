@@ -1,0 +1,11 @@
+exec sql declare c0 cursor for                                                              
+      select emid, emsin, emfnam, emlnam, sum(b.nphrs) as reghrs, sum(b.npotme) as othrs,   
+      sum(b.npdtme)as dthrs, sum(b.npwxdue) as wxdue1, sum(b.npw2due) as wxdue2,            
+      sum(b.npwxdue1) as wxdueb, sum(b.npw2due1) as wxdue2b                                 
+      from empmastp a                                                                       
+      inner join nethstp b                                                                  
+      on a.emid = b.npemp#                                                                  
+      where a.emucde = :$local_code and extract(month from b.npwedt) = :$inmth or           
+            a.emucde = '3' and extract(month from b.npwedt) = :$inmth                       
+      group by emid, emsin, emfnam, emlnam;                                                 
+                                                                                            
