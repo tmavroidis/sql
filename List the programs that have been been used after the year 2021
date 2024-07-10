@@ -1,0 +1,13 @@
+-- List the programs that have been been used after the year 2021 (substr(odldat,5,2)  > 21) 
+
+
+cl: DSPOBJD OBJ(*ALLUSR/*ALL) OBJTYPE(*ALL) OUTPUT(*OUTFILE) OUTFILE(qtemp/tmpobjldt);
+
+select odlbnm, odobnm,odobtp,odobtx, char(date(timestamp_format(odldat,'MMDDYY')),iso) as changed_date from qtemp.tmpobjldt
+where substr(odldat,5,2)  > 21 and odobtp <> '*FILE'
+and 
+(odlbnm = 'ACCPAY'
+or odlbnm = 'APLIB'
+or odlbnm = '<anylib>'
+or odlbnm = '<anylib>')
+order by ODLBNM,ODOBNM
