@@ -1,0 +1,9 @@
+-- List all the user libraries that have activity
+-- use this list to determine what to enter in for "Listing the programs that have been after the year 2021" 
+
+cl: DSPOBJD OBJ(*ALLUSR/*ALL) OBJTYPE(*ALL) OUTPUT(*OUTFILE) OUTFILE(qtemp/tmpobjldt);
+
+SELECT odlbnm
+       FROM qtemp.tmpobjldt
+       GROUP BY odlbnm
+       order by odlbnm
